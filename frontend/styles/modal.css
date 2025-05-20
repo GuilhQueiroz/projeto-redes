@@ -1,40 +1,42 @@
 .modal-backdrop {
     position: fixed;
-    top: 0; left: 0; right: 0; bottom: 0;
-    background: rgba(0,0,0,0.5);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.5);
     display: flex;
     align-items: center;
     justify-content: center;
     z-index: 2000;
+    overflow: auto; /* Permite rolagem se o conteúdo for muito grande */
 }
+
 .modal-content {
     background: #222;
     padding: 32px 24px;
     border-radius: 10px;
-    box-shadow: 0 2px 16px rgba(0,0,0,0.18);
-    min-width: 420px;           /* aumente aqui */
-    max-width: 98vw;
-    width: 600px;               /* aumente aqui */
-    display: flex;
-    flex-direction: column;
-    gap: 18px;
-    align-items: center;        /* centraliza conteúdo horizontalmente */
+    box-shadow: 0 2px 16px rgba(0, 0, 0, 0.18);
+    width: 90%;
+    max-width: 600px;
+    margin: 20px auto; /* Centraliza e dá espaço no topo/baixo */
+    position: relative;
+    margin: 120px auto 20px;
 }
 
 .modal-content h2 {
     text-align: center;
     width: 100%;
-    margin-bottom: 12px;
+    margin-bottom: 20px;
     color: #fff;
+    font-size: 1.5rem;
 }
 
 .modal-content form {
     width: 100%;
-    max-width: 520px; /* ou maior, se quiser */
     display: flex;
     flex-direction: column;
-    align-items: center;
-    gap: 18px;
+    gap: 20px;
 }
 
 .form-group {
@@ -44,22 +46,56 @@
     width: 100%;
 }
 
-.publish-btn, .close-modal-btn {
+.form-group label {
+    color: #ddd;
+    font-size: 0.9rem;
+}
+
+.form-group input,
+.form-group textarea {
+    padding: 10px;
+    border-radius: 5px;
+    border: 1px solid #444;
+    background: #333;
+    color: #fff;
+    font-size: 1rem;
+}
+
+.form-group textarea {
+    min-height: 120px;
+    resize: vertical;
+}
+
+.publish-btn {
     margin-top: 12px;
-    padding: 10px 0;
+    padding: 12px 0;
     border: none;
     border-radius: 6px;
     background: var(--primary-color, #ff4500);
     color: #fff;
     font-weight: bold;
     cursor: pointer;
-    width: 60%;                /* centraliza e deixa o botão maior */
-    align-self: center;        /* centraliza o botão */
+    width: 100%;
+    transition: background 0.2s;
+}
+
+.publish-btn:hover {
+    background: #e03e00;
 }
 
 .close-modal-btn {
+    margin-top: 15px;
+    padding: 10px 0;
+    border: none;
+    border-radius: 6px;
     background: #444;
-    margin-top: 0;
-    width: 40%;
-    align-self: center;
+    color: #fff;
+    font-weight: bold;
+    cursor: pointer;
+    width: 100%;
+    transition: background 0.2s;
+}
+
+.close-modal-btn:hover {
+    background: #555;
 }
