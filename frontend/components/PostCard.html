@@ -1,0 +1,16 @@
+<div class="post-card" data-post-id="{{POST_ID}}">
+    <div class="post-meta">
+        <img src="./assets/do-utilizador.svg" alt="Usuário" class="post-user-icon">
+        <span class="post-author">{{AUTOR}}</span>
+        <span class="post-date">{{DATA}}</span>
+    </div>
+    <h3 class="post-title">
+        <a href="#" onclick="loadPost('post?id={{POST_ID}}')">{{TITULO}}</a>
+    </h3>
+    <div class="post-actions">
+        <button class="vote-btn upvote" onclick="votePost(this, 'up')">👍</button>
+        <span class="vote-count">{{VOTE_COUNT}}</span>
+        <button class="vote-btn downvote" onclick="votePost(this, 'down')">👎</button>
+        <button class="comment-btn" onclick="navigateTo('post?id={{POST_ID}}')">💬 <span>{{COMMENT_COUNT}}</span></button>
+    </div>
+</div>

@@ -1,0 +1,61 @@
+@media (max-width: 960px) {
+    .header-container {
+        flex-wrap: wrap;
+        height: auto;
+        padding: 0.5rem;
+    }
+    
+    .header-center {
+        order: 3;
+        width: 100%;
+        margin: 0.5rem 0;
+    }
+    
+    .search-bar {
+        max-width: 100%;
+    }
+}
+
+@media (max-width: 768px) {
+    .main-content-container {
+        flex-direction: column;
+    }
+    
+    .sidebar {
+        width: 100%;
+        order: 2;
+        margin-top: 1rem;
+    }
+    
+    .post-card {
+        flex-direction: column;
+    }
+    
+    .vote-container {
+        flex-direction: row;
+        justify-content: flex-start;
+        padding: 0.25rem 0.5rem;
+    }
+    
+    .upvote-button, .downvote-button {
+        margin: 0 0.5rem;
+    }
+    
+    .vote-count {
+        margin: 0 0.5rem;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-actions {
+        flex-wrap: wrap;
+    }
+    
+    .action-button {
+        margin-bottom: 0.25rem;
+    }
+    
+    .logo-text {
+        display: none;
+    }
+}

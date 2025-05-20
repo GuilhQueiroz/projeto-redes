@@ -1,0 +1,91 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R Post</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dark.css" id="dark-theme" disabled>
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/post.css">
+    <link rel="stylesheet" href="../styles/profile.css">
+    <link rel="stylesheet" href="../styles/login.css">
+    <link rel="stylesheet" href="../styles/help.css">
+    <link rel="stylesheet" href="../styles/about.css">
+    <link rel="stylesheet" href="../styles/modal.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div id="header-container"></div>
+         <div class="main-content-container">
+                        <!-- Sidebar -->
+            <div id="sidebar-left-container" class="sidebar-left"></div>
+            <!-- Conteúdo Principal -->
+                 <main id="main-content" class="content">
+                     <section class="about-page">
+                         <div class="about-container">
+                             <h2>Sobre o Projeto</h2>
+                             <p>
+                                 Este projeto foi desenvolvido como parte da disciplina de Redes de Computadores. O objetivo principal foi planejar e implementar uma infraestrutura de rede moderna na AWS, utilizando o conceito de VPC (Virtual Private Cloud) com sub-redes públicas e privadas.
+                             </p>
+                             <p>
+                                 Essa estrutura permite a separação lógica dos componentes de uma aplicação web, aumentando a segurança, escalabilidade e organização da aplicação.
+                             </p>
+                             <ul class="about-list">
+                                 <li>
+                                     <strong>Funcionalidades da Plataforma:</strong>
+                                     <ul>
+                                         <li>Feed de posts com curtidas e comentários</li>
+                                         <li>Login, registro e gerenciamento de conta</li>
+                                         <li>Criação e edição de posts</li>
+                                         <li>Modo escuro/claro</li>
+                                         <li>Barra de pesquisa</li>
+                                         <li>Menu lateral expansível</li>
+                                     </ul>
+                                 </li>
+                                 <li>
+                                     <strong>Infraestrutura de Rede:</strong>
+                                     <p>
+                                         O backend e o frontend da aplicação foram distribuídos em sub-redes distintas dentro de uma VPC na AWS, garantindo isolamento, controle de acesso e alta disponibilidade. O uso de sub-redes públicas e privadas permite expor apenas os serviços necessários à internet, mantendo bancos de dados e outros recursos sensíveis protegidos.
+                                     </p>
+                                 </li>
+                                 <li>
+                                     <strong>Objetivo:</strong>
+                                     <p>
+                                         Proporcionar uma experiência semelhante ao Reddit, focando em usabilidade, responsividade, código limpo e boas práticas de infraestrutura de redes.
+                                     </p>
+                                 </li>
+                                 <li>
+                                     <strong>Desenvolvedores:</strong>
+                                     <p>Guilherme Queiroz</p>
+                                     <p>Gustavo Nobrega</p>
+                                 </li>
+                             </ul>
+                             <p>
+                                 Para dúvidas ou sugestões, entre em contato pelo e-mail <a href="mailto:suporte@teste.com">suporte@teste.com</a>.
+                             </p>
+                         </div>
+                     </section>
+                 </main>
+                 <div id="sidebar-right-container" class="sidebar-right"></div>
+         </div>
+    <script src="../scripts/components.js"></script>
+    <script src="../scripts/posts.js"></script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/theme.js"></script>
+    <script src="../scripts/comments.js"></script>
+    <script src="../scripts/profile.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadComponent('Header', 'header-container');
+        loadComponent('SidebarLeft', 'sidebar-left-container').then(() => {
+            if (typeof updateSidebarUserName === 'function') {
+                updateSidebarUserName();
+            }
+        });
+        loadComponent('SideBarRight', 'sidebar-right-container');
+    });
+</script>
+</body>
+</html>

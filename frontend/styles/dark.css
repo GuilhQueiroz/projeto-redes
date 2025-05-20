@@ -1,0 +1,29 @@
+/* dark.css - Sobrescreve as cores do tema claro */
+
+body.dark-mode {
+    --background-color: #181a20;
+    --card-background: #23262f;
+    --border-color: #2a2d37;
+    --text-color: #f5f6fa;
+    --text-muted: #aaa;
+    --upvote-color: #ffb86c;
+    --downvote-color: #8aadf4;
+}
+
+/* Outros ajustes visuais */
+body.dark-mode input,
+body.dark-mode textarea {
+    background: #23262f;
+    color: #f5f6fa;
+    border: 1px solid #333;
+}
+
+body.dark-mode .like-button:hover {
+    background-color: #2d313a;
+    color: var(--upvote-color);
+}
+
+body.dark-mode .dislike-button:hover {
+    background-color: #232e4b;
+    color: var(--downvote-color);
+}

@@ -1,0 +1,256 @@
+.r-header {
+    background-color: var(--card-background);
+    height: var(--header-height);
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    box-shadow: 0 1px 3px rgba(0,0,0,0.1);
+    border-bottom: 1px solid var(--border-color);
+}
+
+.app-container {
+    min-height: 100vh;
+    height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.header-container {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    height: 100%;
+    width: 100%;           /* Ocupa toda a largura */
+    max-width: none;       /* Remove limite de largura */
+    
+    margin: 0;             /* Remove centralização */
+    padding: 0 24px;       /* Espaço interno opcional */
+}
+
+.header-left {
+    flex: 0 0 auto;
+}
+
+.header-center {
+    flex: 1 1 auto;
+    display: flex;
+    justify-content: center;
+}
+
+.header-right {
+    flex: 0 0 auto;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+}
+
+.logo {
+    display: flex;
+    align-items: center;
+    cursor: pointer;
+}
+
+.logo-icon {
+    background-color: var(--primary-color);
+    color: white;
+    font-weight: bold;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    margin-right: 0.5rem;
+}
+
+.logo-text {
+    font-weight: bold;
+    color: var(--text-color);
+}
+
+.search-bar {
+    display: flex;
+    align-items: center;
+    width: 100%;
+    max-width: 600px;
+    background-color: var(--card-background);
+    border-radius: 4px;
+    border: 1px solid var(--border-color);
+    padding: 0 8px;
+}
+
+.search-icon {
+    display: flex;
+    align-items: center;
+    margin-right: 8px; /* Espaço entre o ícone e o input */
+}
+
+.search-bar input {
+    flex-grow: 1;
+    border: none;
+    background: transparent;
+    font-size: 1.1rem;
+    padding: 0.5rem 0;
+    outline: none;
+    color: var(--text-color);
+}
+
+.search-button {
+    padding: 0 1.5rem;
+    background-color: var(--card-background);
+    border-left: none;
+    border-radius: 0 4px 4px 0;
+    background-color: var(--background-color);
+    cursor: pointer;
+    font-size: 1.1rem;
+}
+
+.create-post-button {
+    width: 100%;
+    padding: 10px 0;
+    background: var(--primary-color, #ff4500);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.create-post-button:hover {
+    background: #e03d00;
+}
+
+.login-button {
+    background-color: var(--primary-color);
+    color: white;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    margin: 0 1rem;
+    cursor: pointer;
+}
+
+.user-avatar {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
+    background-color: var(--primary-color, #555);
+    margin-right: 12px;
+    display: inline-block;
+}
+
+.theme-toggle {
+    background: none;
+    border: none;
+    font-size: 1.25rem;
+    cursor: pointer;
+    margin-right: 1rem;
+}
+
+.main-content-container {
+    display: flex;
+    flex: 1 1 auto;
+    min-height: 0;
+    height: 100%;
+    align-items: stretch;
+    background: var(--card-background);
+}
+
+/* Sidebar esquerda */
+.sidebar-left {
+    width: 250px;
+    padding-top: 15px;
+    min-height: 100vh; /* Garante altura total da viewport */
+    background-color: var(--card-background);
+    border-right: 1px solid var(--border-color);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.sidebar-left ul {
+    list-style: none;
+    padding: 0;
+    margin: 0;
+}
+
+/* Conteúdo principal */
+.content {
+    flex: 1;
+    min-height: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    align-items: stretch;   /* Centraliza o feed-container verticalmente */
+    padding: 32px 0;
+    background-color: var(--card-background);
+    min-width: 0;
+    box-sizing: border-box;
+}
+
+/* Centraliza e limita a largura do feed igual ao Reddit */
+.feed-container {
+    width: 100%;
+    max-width: 800px;      /* ou 700px, ajuste como preferir */
+    margin: 0 auto;
+    /* Espaço extra opcional */
+    padding: 0 16px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 24px;             /* Espaço entre os posts */
+}
+
+/* Sidebar direita */
+.sidebar-right {
+    width: 250px;
+    min-height: 100vh; /* Garante altura total da viewport */
+    background-color: var(--card-background);
+    border-left: 1px solid var(--border-color);
+    flex-shrink: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+/* Estilo para os itens da sidebar */
+.sidebar-item {
+    display: flex;
+    align-items: center;
+    margin-bottom: 18px;
+}
+
+.sidebar-item a {
+    display: flex;
+    align-items: center;
+    color: #fff;
+    text-decoration: none;
+    font-size: 1.05rem;
+    padding: 8px 12px;
+    border-radius: 6px;
+    transition: background 0.2s;
+}
+
+.sidebar-item a:hover {
+    background: #333;
+}
+
+/* Estilo para os ícones */
+.sidebar-icon {
+    width: 24px;
+    height: 24px;
+    margin-right: 10px;
+    vertical-align: middle;
+}
+
+.user-info {
+    margin-bottom: 32px;
+}
+
+.user-name {
+    color: #fff;
+    font-weight: 600;
+    font-size: 1.1rem;
+}
+
+/* Garante altura total */
+.app-container, .main-content-container, .content, .sidebar-left, .sidebar-right {
+    min-height: 100vh;
+    height: 100%;
+}

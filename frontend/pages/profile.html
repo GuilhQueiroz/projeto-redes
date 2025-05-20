@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R Post</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dark.css" id="dark-theme" disabled>
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/post.css">
+    <link rel="stylesheet" href="../styles/profile.css">
+    <link rel="stylesheet" href="../styles/login.css">
+    <link rel="stylesheet" href="../styles/help.css">
+    <link rel="stylesheet" href="../styles/about.css">
+    <link rel="stylesheet" href="../styles/modal.css">
+</head>
+<body>
+    <div class="app-container">
+        <!-- Header -->
+        <div id="header-container"></div>
+         <div class="main-content-container">
+                        <!-- Sidebar -->
+            <div id="sidebar-left-container" class="sidebar-left"></div>
+            <!-- Conteúdo Principal -->
+                 <main id="main-content" class="content">
+        <section class="profile-page">
+            <form id="profile-form" class="profile-container">
+                <div class="profile-fields">
+                    <div class="profile-fields-left">
+                        <div class="form-group">
+                            <label for="profile-name">Nome</label>
+                            <input type="text" id="profile-name" name="name" autocomplete="given-name" required>
+                        </div>
+                        <div class="form-group">
+                            <label for="profile-surname">Sobrenome</label>
+                            <input type="text" id="profile-surname" name="surname" autocomplete="family-name" required>
+                        </div>
+                    </div>
+                    <div class="profile-avatar-section">
+                        <img id="profile-avatar" class="profile-avatar" src="/frontend/assets/do-utilizador.svg" alt="">
+                        <button type="button" class="change-avatar-btn">Alterar imagem</button>
+                    </div>
+                </div>
+                <!-- Bio e informações extras abaixo -->
+                <div id="profile-feedback" style="color: #ff4500; margin-bottom: 1rem;"></div>
+                <div class="profile-bio-section">
+                    <label for="profile-bio">Bio</label>
+                    <textarea id="profile-bio" name="bio" rows="3" placeholder="Escreva algo sobre você..."></textarea>
+                </div>
+                <button type="submit" class="profile-save-btn">Salvar alterações</button>
+            </form>
+        </section>
+    </main>
+            <!-- Sidebar Right-->
+            <div id="sidebar-right-container" class="sidebar-right"></div>
+         </div>
+    </div>
+    <script src="../scripts/components.js"></script>
+    <script src="../scripts/posts.js"></script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/theme.js"></script>
+    <script src="../scripts/comments.js"></script>
+    <script src="../scripts/profile.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadComponent('Header', 'header-container').then(updateHeaderAuth);
+        loadComponent('SidebarLeft', 'sidebar-left-container').then(updateSidebarUserName);
+        loadComponent('SideBarRight', 'sidebar-right-container');
+        loadProfile(); // <-- Isso garante que os dados do usuário serão buscados ao abrir a página
+        // ...outras funções de inicialização
+    });
+    </script>
+</body>
+</html>

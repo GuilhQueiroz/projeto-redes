@@ -1,0 +1,105 @@
+/* login.css */
+
+.auth-page {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    min-height: 80vh;
+    background: transparent;
+}
+
+.auth-container {
+    background: #222;
+    padding: 32px 28px;
+    border-radius: 12px;
+    box-shadow: 0 2px 16px rgba(0,0,0,0.25);
+    width: 100%;
+    max-width: 350px;
+    color: #fff;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.auth-container h2 {
+    margin-bottom: 24px;
+    color: var(--primary-color, #ff4500);
+    font-weight: bold;
+}
+
+.form-group {
+    width: 100%;
+    margin-bottom: 18px;
+    display: flex;
+    flex-direction: column;
+}
+
+.form-group label {
+    margin-bottom: 6px;
+    color: #ccc;
+    font-size: 1rem;
+}
+
+.form-group input {
+    padding: 10px;
+    border-radius: 6px;
+    border: 1px solid #444;
+    background: #181818;
+    color: #fff;
+    font-size: 1rem;
+    outline: none;
+    transition: border 0.2s;
+}
+
+.form-group input:focus {
+    border: 1.5px solid var(--primary-color, #ff4500);
+}
+
+.auth-container button[type="submit"] {
+    width: 100%;
+    padding: 10px 0;
+    background: var(--primary-color, #ff4500);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    font-weight: bold;
+    cursor: pointer;
+    font-size: 1.1rem;
+    margin-top: 8px;
+    transition: background 0.2s;
+}
+
+.auth-container button[type="submit"]:hover {
+    background: #e03d00;
+}
+
+.auth-container p {
+    margin-top: 18px;
+    color: #ccc;
+    font-size: 0.98rem;
+}
+
+.auth-container a {
+    color: var(--primary-color, #ff4500);
+    text-decoration: none;
+    font-weight: 500;
+}
+
+.auth-container a:hover {
+    text-decoration: underline;
+}
+
+.logout-button {
+    background: #ff4500;
+    color: #fff;
+    border: none;
+    padding: 0.5rem 1rem;
+    border-radius: 4px;
+    cursor: pointer;
+    margin-left: 1rem;
+}
+
+.logout-button:hover {
+    background: #d13b00;
+}
+

@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>R Post</title>
+    <link rel="stylesheet" href="../styles/main.css">
+    <link rel="stylesheet" href="../styles/dark.css" id="dark-theme" disabled>
+    <link rel="stylesheet" href="../styles/header.css">
+    <link rel="stylesheet" href="../styles/post.css">
+    <link rel="stylesheet" href="../styles/profile.css">
+    <link rel="stylesheet" href="../styles/login.css">
+    <link rel="stylesheet" href="../styles/help.css">
+    <link rel="stylesheet" href="../styles/about.css">
+    <link rel="stylesheet" href="../styles/modal.css">
+</head>
+<body>
+        <div class="app-container">
+        <!-- Header -->
+        <div id="header-container"></div>
+         <div class="main-content-container">
+                        <!-- Sidebar -->
+            <div id="sidebar-left-container" class="sidebar-left"></div>
+            <!-- Conteúdo Principal -->
+                 <main id="main-content" class="content">
+                        <section class="help-page">
+                        <div class="help-container">
+                            <h2>Ajuda</h2>
+                            <p>Bem-vindo à seção de ajuda! Aqui você encontra respostas para as dúvidas mais comuns sobre o uso da plataforma.</p>
+                            <ul class="help-list">
+                                <li>
+                                    <strong>Como criar uma conta?</strong>
+                                    <p>Acesse a página de registro, preencha seus dados e clique em "Criar Conta".</p>
+                                </li>
+                                <li>
+                                    <strong>Como faço login?</strong>
+                                    <p>Vá até a página de login, informe seu e-mail e senha cadastrados.</p>
+                                </li>
+                                <li>
+                                    <strong>Como criar um post?</strong>
+                                    <p>Após fazer login, clique em "Criar Post" na barra de navegação e preencha as informações do seu post.</p>
+                                </li>
+                                <li>
+                                    <strong>Como editar meu perfil?</strong>
+                                    <p>Acesse sua conta pelo ícone de usuário e edite suas informações pessoais.</p>
+                                </li>
+                            </ul>
+                            <p>Se sua dúvida não foi respondida, entre em contato pelo e-mail <a href="mailto:suporte@teste.com">suporte@teste.com</a>.</p>
+                        </div>
+                    </section>
+                </main>
+                <div id="sidebar-right-container" class="sidebar-right"></div>
+         </div>
+    <script src="../scripts/components.js"></script>
+    <script src="../scripts/posts.js"></script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/theme.js"></script>
+    <script src="../scripts/comments.js"></script>
+    <script src="../scripts/profile.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadComponent('Header', 'header-container');
+        loadComponent('SidebarLeft', 'sidebar-left-container').then(() => {
+            if (typeof updateSidebarUserName === 'function') {
+                updateSidebarUserName();
+            }
+        });
+        loadComponent('SideBarRight', 'sidebar-right-container');
+    });
+</script>
+</body>
+</html>
+

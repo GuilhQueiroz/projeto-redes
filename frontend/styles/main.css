@@ -1,0 +1,82 @@
+/* main.css - Estilo base global */
+
+/* Reset básico */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+html, body {
+    font-family: Arial, sans-serif;
+    font-size: 16px;
+    line-height: 1.5;
+    color: var(--text-color);
+    background-color: var(--card-background);
+    height: 100%;
+    overflow-x: hidden;
+}
+
+a {
+    color: var(--primary-color);
+    text-decoration: none;
+}
+
+ul, ol {
+    list-style: none;
+}
+
+img {
+    max-width: 100%;
+    height: auto;
+}
+
+button, input, textarea {
+    font-family: inherit;
+    outline: none;
+}
+
+/* Variáveis padrão */
+:root {
+    --primary-color: #0079d3;
+    --secondary-color: #ff4500;
+    --background-color: #f8f9fa;
+    --card-background: #fff;
+    --border-color: #edeff1;
+    --text-color: #1c1c1c;
+    --text-muted: #7c7c7c;
+    --upvote-color: #ff4500;
+    --downvote-color: #7193ff;
+    --header-height: 60px;
+    --sidebar-width: 250px;
+    --communities-width: 300px;
+    --separator-color: #202227;
+}
+
+
+
+/* Responsividade básica */
+@media (max-width: 900px) {
+    .sidebar-left, .sidebar-right {
+        display: none;
+    }
+    .main-content-container {
+        flex-direction: column;
+    }
+    .content {
+        padding: 8px;
+    }
+}
+
+@media (max-width: 768px) {
+    :root {
+        --sidebar-width: 60px;
+        --communities-width: 0px;
+    }
+}
+
+@media (max-width: 576px) {
+    :root {
+        --sidebar-width: 0px;
+    }
+}
