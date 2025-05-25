@@ -1,4 +1,6 @@
 const postService = require('../services/postService');
+const Post = require('../models/Post');
+const Comment = require('../models/Comment');
 
 exports.getAllPosts = async (req, res, next) => {
     try {
@@ -32,17 +34,21 @@ exports.updatePost = async (req, res, next) => {
 
 exports.deletePost = async (req, res, next) => {
     try {
-        await postService.deletePost(req.params.id);
-        res.json({ message: 'Post excluído' });
-    } catch (err) { next(err); }
+        const postId = req.params.id;
+        // Remove todos os comentários do post
+        await Comment.destroy({ where: { postId } });
+        // Remove o post
+        await Post.destroy({ where: { id: postId } });
+        res.status(204).send();
+    } catch (err) {
+        next(err);
+    }
 };
 
 exports.votePost = async (req, res, next) => {
     try {
         const postId = req.params.id;
         const { type } = req.body; // 'up' ou 'down'
-        // Implemente a lógica de voto aqui (exemplo simples):
-        // await postService.vote(postId, req.user.id, type);
         res.json({ message: 'Voto registrado!' });
     } catch (err) {
         next(err);

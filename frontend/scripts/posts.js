@@ -36,7 +36,19 @@ function renderPosts(posts) {
 }
 
 function viewPost(id) {
-    window.location.href = "pages/post.html?id=" + id;
+    // ...código para abrir o post...
+    saveRecentActivity(id);
+    window.location.href = `pages/post.html?id=${id}`;
+}
+
+function saveRecentActivity(postId) {
+    let recent = JSON.parse(localStorage.getItem('recentPosts') || '[]');
+    // Evita duplicados
+    recent = recent.filter(pid => pid !== postId);
+    recent.unshift(postId);
+    // Limita a 5 itens
+    if (recent.length > 5) recent = recent.slice(0, 5);
+    localStorage.setItem('recentPosts', JSON.stringify(recent));
 }
 
 // Criar post
@@ -117,7 +129,9 @@ async function loadSinglePost(postId) {
 // Função para renderizar um post individual
 function renderSinglePost(post) {
     const container = document.getElementById('posts-container');
-    
+    const userId = localStorage.getItem('userId');
+    const isOwner = post.author && String(post.author.id) === String(userId);
+
     // Usa a foto do usuário se existir, senão usa o SVG padrão
     const avatar = post.author?.avatar
         ? post.author.avatar
@@ -140,7 +154,26 @@ function renderSinglePost(post) {
                 <span class="vote-count">${post.votes ?? 0}</span>
                 <button class="vote-btn downvote" onclick="votePost(this, 'down', ${post.id})">👎</button>
                 <span class="comment-count">💬 ${post.commentsCount ?? 0} comentários</span>
+                ${isOwner ? `<button class="delete-post-btn" onclick="deletePost(${post.id})">Excluir</button>` : ''}
             </div>
         </div>
     `;
+}
+
+async function deletePost(postId) {
+    console.log('clicou', postId);
+    if (!confirm('Tem certeza que deseja excluir este post? Esta ação não pode ser desfeita.')) return;
+    const token = localStorage.getItem('blogToken');
+    const response = await fetch(`http://localhost:3000/api/posts/${postId}`, {
+        method: 'DELETE',
+        headers: {
+            'Authorization': 'Bearer ' + token
+        }
+    });
+    if (response.status === 204) {
+        alert('Post excluído com sucesso!');
+        window.location.href = '../index.html';
+    } else {
+        alert('Erro ao excluir post.');
+    }
 }

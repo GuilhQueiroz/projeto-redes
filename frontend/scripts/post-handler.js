@@ -70,6 +70,9 @@ class PostHandler {
             this.renderPost(post);
             await this.loadComments();
             
+            // (Removido) Verificar permissão de exclusão
+            // this.setupDeleteButton(post);
+            
         } catch (error) {
             console.error('Erro ao carregar post:', error);
             this.showError('Post não encontrado', 'O post que você está procurando não existe ou foi removido.');
@@ -217,25 +220,18 @@ class PostHandler {
                 break;
         }
         
-        this.renderComments(sortedComments);
+        const tree = this.buildCommentTree(sortedComments);
+        this.renderComments(tree);
     }
 
-    renderComments(comments) {
-        const container = document.getElementById('comments-list');
-        
-        if (comments.length === 0) {
-            container.innerHTML = `
-                <div class="no-comments">
-                    <p>Seja o primeiro a comentar!</p>
-                </div>
-            `;
-            return;
+    renderComments(comments, container = null, level = 0) {
+        if (!container) {
+            container = document.getElementById('comments-list');
+            container.innerHTML = '';
         }
-
-        container.innerHTML = comments.map(comment => {
-            // Backend não está incluindo author nos comentários, vamos tratar
-            const avatar = '/frontend/assets/do-utilizador.svg';
-            const authorName = 'Usuário';
+        comments.forEach(comment => {
+            const avatar = (comment.author && comment.author.avatar) ? comment.author.avatar : '/frontend/assets/do-utilizador.svg';
+            const authorName = comment.author && comment.author.name ? comment.author.name : 'Usuário';
             const formattedDate = new Date(comment.createdAt).toLocaleDateString('pt-BR', {
                 day: '2-digit',
                 month: '2-digit',
@@ -244,49 +240,64 @@ class PostHandler {
                 minute: '2-digit'
             });
 
-            return `
-                <div class="comment-box" data-comment-id="${comment.id}">
-                    <div class="comment-header">
-                        <img src="${avatar}" alt="${authorName}" class="comment-user-icon">
-                        <div class="comment-meta">
-                            <span class="comment-author">${authorName}</span>
-                            <span class="comment-date">${formattedDate}</span>
-                        </div>
+            const div = document.createElement('div');
+            div.className = 'comment-box';
+            div.style.marginLeft = `${level * 24}px`;
+            div.innerHTML = `
+                <div class="comment-header">
+                    <img src="${avatar}" alt="${authorName}" class="comment-user-icon">
+                    <div class="comment-meta">
+                        <span class="comment-author">${authorName}</span>
+                        <span class="comment-date">${formattedDate}</span>
                     </div>
-                    <div class="comment-content">
-                        <p>${comment.content}</p>
-                    </div>
-                    <div class="comment-actions">
-                        <button class="vote-btn comment-upvote" onclick="postHandler.voteComment(${comment.id}, 'up')">
-                            👍 <span>0</span>
-                        </button>
-                        <button class="vote-btn comment-downvote" onclick="postHandler.voteComment(${comment.id}, 'down')">
-                            👎 <span>0</span>
-                        </button>
-                        <button class="reply-btn" onclick="postHandler.toggleReplyForm(${comment.id})">
-                            Responder
-                        </button>
-                    </div>
-                    <div class="reply-form" id="reply-form-${comment.id}" style="display: none;">
-                        <textarea placeholder="Escreva sua resposta..." rows="3"></textarea>
-                        <div class="reply-form-actions">
-                            <button onclick="postHandler.submitReply(${comment.id})">Responder</button>
-                            <button onclick="postHandler.cancelReply(${comment.id})">Cancelar</button>
-                        </div>
+                </div>
+                <div class="comment-content">
+                    <p>${comment.content}</p>
+                </div>
+                <div class="comment-actions">
+                    <button class="vote-btn comment-upvote" onclick="postHandler.voteComment(${comment.id}, 'up')">
+                        👍 <span>0</span>
+                    </button>
+                    <button class="vote-btn comment-downvote" onclick="postHandler.voteComment(${comment.id}, 'down')">
+                        👎 <span>0</span>
+                    </button>
+                    <button class="reply-btn" onclick="postHandler.toggleReplyForm(${comment.id})">
+                        Responder
+                    </button>
+                </div>
+                <div class="reply-form" id="reply-form-${comment.id}" style="display: none;">
+                    <textarea placeholder="Escreva sua resposta..." rows="3"></textarea>
+                    <div class="reply-form-actions">
+                        <button onclick="postHandler.submitReply(${comment.id})">Responder</button>
+                        <button onclick="postHandler.cancelReply(${comment.id})">Cancelar</button>
                     </div>
                 </div>
             `;
-        }).join('');
+            container.appendChild(div);
+
+            // Renderizar replies aninhadas
+            if (comment.replies && comment.replies.length) {
+                this.renderRepliesWithLimit(comment.replies, container, level + 1);
+            }
+        });
     }
 
-    // Votação de Comentários (ainda não implementada no backend)
-    async voteComment(commentId, type) {
-        try {
-            // Por enquanto, apenas mostrar mensagem já que não está implementado
-            this.showNotification('Sistema de votação em comentários será implementado em breve', 'info');
-        } catch (error) {
-            console.error('Erro ao votar no comentário:', error);
-            this.showNotification('Erro ao registrar voto', 'error');
+    renderRepliesWithLimit(replies, container, level) {
+        const maxToShow = 5;
+        replies.slice(0, maxToShow).forEach(reply => {
+            this.renderComments([reply], container, level);
+        });
+        if (replies.length > maxToShow) {
+            const btn = document.createElement('button');
+            btn.textContent = 'Ver mais respostas';
+            btn.className = 'see-more-btn';
+            btn.onclick = () => {
+                replies.slice(maxToShow).forEach(reply => {
+                    this.renderComments([reply], container, level);
+                });
+                btn.remove();
+            };
+            container.appendChild(btn);
         }
     }
 
@@ -367,20 +378,20 @@ class PostHandler {
         }
     }
 
-    async submitReply(commentId) {
-        const replyForm = document.getElementById(`reply-form-${commentId}`);
+    async submitReply(parentCommentId) {
+        const replyForm = document.getElementById(`reply-form-${parentCommentId}`);
         const textarea = replyForm.querySelector('textarea');
         const content = textarea.value.trim();
-        
+
         if (!content) {
             this.showNotification('Digite uma resposta', 'warning');
             return;
         }
 
         try {
-            const response = await this.fetchAuth(`http://localhost:3000/api/comments/reply/${commentId}`, {
+            const response = await this.fetchAuth(`http://localhost:3000/api/comments/post/${this.currentPostId}`, {
                 method: 'POST',
-                body: JSON.stringify({ content })
+                body: JSON.stringify({ content, parentId: parentCommentId })
             });
 
             if (response.ok) {
@@ -502,6 +513,21 @@ class PostHandler {
             notification.remove();
         }, 4000);
     }
+
+    // Função para construir a árvore de comentários
+    buildCommentTree(comments) {
+        const map = {};
+        comments.forEach(c => map[c.id] = { ...c, replies: [] });
+        const tree = [];
+        comments.forEach(c => {
+            if (c.parentId) {
+                map[c.parentId]?.replies.push(map[c.id]);
+            } else {
+                tree.push(map[c.id]);
+            }
+        });
+        return tree;
+    }
 }
 
 // Funções globais para compatibilidade com HTML existente
@@ -554,10 +580,3 @@ document.addEventListener('DOMContentLoaded', () => {
         loadComponent('SidebarLeft', 'sidebar-left-container').then(updateSidebarUserName);
         loadComponent('SideBarRight', 'sidebar-right-container');
 });
-
-
-
-// Exportar para uso em outros arquivos se necessário
-if (typeof module !== 'undefined' && module.exports) {
-    module.exports = PostHandler;
-}

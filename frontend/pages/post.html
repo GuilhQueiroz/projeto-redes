@@ -53,12 +53,26 @@
     </div>
     
     <script src="../scripts/components.js"></script>
+    <sript src="../scripts/comments.js"></script>
     <script src="../scripts/utils.js"></script>
     <script src="../scripts/theme.js"></script>
     <script src="../scripts/profile.js"></script>
     <script src="../scripts/auth.js"></script>
     <script src="../scripts/post-handler.js"></script>
-    
-    
+    <script src="../scripts/posts.js"></script>
+    <script src="../scripts/search.js"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', () => {
+        loadComponent('Header', 'header-container').then(() => {
+        if (typeof updateHeaderAuth === 'function') updateHeaderAuth();
+        if (typeof initSearchBar === 'function') initSearchBar();
+    });
+        loadComponent('SidebarLeft', 'sidebar-left-container').then(() => {
+            if (typeof updateSidebarUserName === 'function') updateSidebarUserName();
+            loadRecentActivities(); // <-- Só carrega as atividades recentes
+        });
+        loadComponent('SideBarRight', 'sidebar-right-container');
+    });
+    </script>
 </body>
 </html>

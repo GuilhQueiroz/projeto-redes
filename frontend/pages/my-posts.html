@@ -2,8 +2,7 @@
 <html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>R Post</title>
+    <title>Meus Posts</title>
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/dark.css" id="dark-theme" disabled>
     <link rel="stylesheet" href="../styles/header.css">
@@ -18,26 +17,42 @@
     <div class="app-container">
         <div id="header-container"></div>
         <div class="main-content-container">
-            <div id="sidebar-left-container" class="sidebar-left"></div>
+            <div id="sidebar-left-container" class="sidebar-left">
+                
+            </div>
             <main id="main-content" class="content">
                 <div class="feed-container">
-                    <section class="home-page">
-                        <h2>Últimos Posts</h2>
-                        <div id="posts-container"></div>
+                    <section class="my-posts-page">
+                        <h1>Meus Posts</h1>
+                        <div id="my-posts-container"></div>
                     </section>
                 </div>
             </main>
             <div id="sidebar-right-container" class="sidebar-right"></div>
         </div>
     </div>
-    <script src="scripts/components.js"></script>
-    <script src="scripts/utils.js"></script>
-    <script src="scripts/theme.js"></script>
-    <script src="scripts/posts.js"></script>
-    <script src="scripts/comments.js"></script>
-    <script src="scripts/auth.js"></script>
-    <script src="scripts/profile.js"></script>
-    <script src="scripts/search.js"></script>
+    <div id="create-post-modal" style="display:none;">
+        <!-- Conteúdo do modal de criação de post -->
+    </div>
+    <div id="confirm-modal" style="display:none;">
+      <div class="modal-overlay"></div>
+      <div class="modal-content">
+        <p id="confirm-modal-message">Tem certeza que deseja excluir este post? Esta ação não pode ser desfeita.</p>
+        <div class="modal-actions">
+          <button id="confirm-modal-yes" class="modal-btn modal-btn-danger">Sim</button>
+          <button id="confirm-modal-no" class="modal-btn">Cancelar</button>
+        </div>
+      </div>
+    </div>
+    <script src="../scripts/components.js"></script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/theme.js"></script>
+    <script src="../scripts/posts.js"></script>
+    <script src="../scripts/comments.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/profile.js"></script>
+    <script src="../scripts/my-posts.js"></script>
+    <script src="../scripts/search.js"></script>
     <script>
     document.addEventListener('DOMContentLoaded', () => {
         loadComponent('Header', 'header-container').then(() => {
@@ -48,11 +63,11 @@
             if (typeof updateSidebarUserName === 'function') updateSidebarUserName();
             // Chame aqui para garantir que a sidebar já foi carregada!
             loadRecentActivities();
-            loadPosts();
+            //loadPosts();
         });
         loadComponent('SideBarRight', 'sidebar-right-container');
         // ...outras funções de inicialização...
     });
-    </script>
+</script>    
 </body>
 </html>

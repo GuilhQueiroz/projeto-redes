@@ -73,6 +73,7 @@
     border-radius: 4px;
     border: 1px solid var(--border-color);
     padding: 0 8px;
+    position: relative;
 }
 
 .search-icon {
@@ -248,6 +249,168 @@
     color: #fff;
     font-weight: 600;
     font-size: 1.1rem;
+}
+
+.sidebar-separator {
+    border: none;
+    border-top: 1px solid var(--separator-color, #ddd);
+    margin: 12px 0;
+}
+
+.sidebar-title {
+    font-weight: bold;
+    margin-bottom: 6px;
+    font-size: 1rem;
+}
+
+.recent-activities-list {
+    list-style: none;
+    padding-left: 0;
+    margin: 0;
+}
+
+.recent-activities-list li {
+    font-size: 0.95rem;
+    color: var(--text-muted, #7c7c7c);
+    margin-bottom: 4px;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recent-activity-link {
+    color: var(--primary-color, #ff4500);
+    text-decoration: none;
+    font-weight: 500;
+    padding: 2px 0;
+    display: inline-block;
+    border-radius: 4px;
+    transition: background 0.2s, color 0.2s;
+}
+
+.recent-activity-link:hover,
+.recent-activity-link:focus {
+    background: var(--primary-color, #ff4500);
+    color: #fff;
+    text-decoration: none;
+}
+
+.recent-activity-item {
+    cursor: pointer;
+    color: #1a1a1b;
+    background: transparent;
+    border-radius: 4px;
+    padding: 4px 8px;
+    margin-bottom: 4px;
+    font-size: 1rem;
+    font-weight: bold;      /* Negrito */
+    transition: background 0.15s, color 0.15s;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
+
+.recent-activity-item:hover,
+.recent-activity-item:focus {
+    background: #f6f7f8;
+    color: #ff4500;
+}
+
+.search-suggestions {
+    position: absolute;
+    background: #fff;
+    border: 1px solid #eee;
+    width: 100%;
+    max-height: 200px;
+    overflow-y: auto;
+    z-index: 10;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+}
+
+.search-suggestions:empty {
+    display: none;
+}
+
+.search-suggestions li {
+    padding: 8px 12px;
+    cursor: pointer;
+    font-size: 1rem;
+    color: #222;
+}
+
+.search-suggestions li:hover,
+.search-suggestions li.active {
+    background: #ffe5d0;
+    color: #ff4500;
+}
+
+/* Modal de confirmação */
+#confirm-modal {
+    position: fixed;
+    top: 0; left: 0; right: 0; bottom: 0;
+    z-index: 2000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+#confirm-modal .modal-overlay {
+    position: absolute;
+    top: 0; left: 0; right: 0; bottom: 0;
+    background: rgba(0,0,0,0.45);
+}
+
+#confirm-modal .modal-content {
+    position: relative;
+    background: var(--card-background, #fff);
+    color: var(--text-color, #1c1c1c);
+    border-radius: 10px;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.18);
+    padding: 32px 28px 24px 28px;
+    min-width: 320px;
+    max-width: 90vw;
+    z-index: 1;
+    text-align: center;
+}
+
+#confirm-modal .modal-actions {
+    margin-top: 24px;
+    display: flex;
+    justify-content: center;
+    gap: 18px;
+}
+
+#confirm-modal .modal-btn {
+    padding: 10px 28px;
+    border: none;
+    border-radius: 6px;
+    background: var(--primary-color, #0079d3);
+    color: #fff;
+    font-weight: 600;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#confirm-modal .modal-btn:hover {
+    background: var(--secondary-color, #ff4500);
+}
+
+#confirm-modal .modal-btn-danger {
+    background: var(--secondary-color, #ff4500);
+}
+
+#confirm-modal .modal-btn-danger:hover {
+    background: #d73700;
+}
+
+/* Dark mode */
+body.dark-mode #confirm-modal .modal-content {
+    background: var(--card-background, #23262f);
+    color: var(--text-color, #f5f6fa);
 }
 
 

@@ -34,3 +34,11 @@ function navigateTo(page) {
         }
     }
 }
+
+function navigateToPost(postId) {
+    if (window.location.pathname.endsWith('/index.html')) {
+        window.location.href = `pages/post.html?id=${postId}`;
+    } else {
+        window.location.href = `post.html?id=${postId}`;
+    }
+}

@@ -18,6 +18,8 @@ async function login(email, password) {
     const data = await response.json();
     if (data.token) {
         localStorage.setItem('blogToken', data.token);
+        localStorage.setItem('userId', data.user.id);
+        localStorage.setItem('userName', data.user.name);
     }
     return data;
 }

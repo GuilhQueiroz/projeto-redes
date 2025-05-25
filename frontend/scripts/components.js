@@ -28,3 +28,35 @@ function updateSidebarUserName() {
         sidebarUserName.textContent = userName;
     }
 }
+
+async function loadRecentActivities() {
+    const list = document.getElementById('recent-activities-list');
+    if (!list) return;
+    const recent = JSON.parse(localStorage.getItem('recentPosts') || '[]');
+    if (!recent.length) {
+        list.innerHTML = '<li style="color:#aaa;">Nenhuma atividade recente</li>';
+        return;
+    }
+    // Busca títulos dos posts
+    const items = await Promise.all(recent.map(async postId => {
+        try {
+            const res = await fetch(`http://localhost:3000/api/posts/${postId}`);
+            if (!res.ok) return null;
+            const post = await res.json();
+            // Aqui entra o seu trecho:
+            return `<li title="${post.title}" class="recent-activity-item" onclick="navigateToPost(${post.id})">
+                <span>${post.title}</span>
+            </li>`;
+        } catch {
+            return null;
+        }
+    }));
+    list.innerHTML = items.filter(Boolean).join('');
+}
+
+// Chame isso ao carregar a sidebar:
+document.addEventListener('DOMContentLoaded', () => {
+    loadComponent('SidebarLeft', 'sidebar-left-container').then(() => {
+        loadRecentActivities();
+    });
+});

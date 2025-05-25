@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>R Post</title>
+    <title>Editar Post</title>
     <link rel="stylesheet" href="../styles/main.css">
     <link rel="stylesheet" href="../styles/dark.css" id="dark-theme" disabled>
     <link rel="stylesheet" href="../styles/header.css">
@@ -20,13 +20,17 @@
         <div id="header-container"></div>
          <div class="main-content-container">
                         <!-- Sidebar -->
-            <div id="sidebar-left-container" class="sidebar-left"></div>
+            <div id="sidebar-left-container" class="sidebar-left">
+                
+            </div>
             <!-- Conteúdo Principal -->
                  <main id="main-content" class="content">
-                     <main class="content">
+                     <div class="feed-container">
+                         <!-- Edit Post Section -->
                          <section class="edit-post-page">
                              <h2>Editar Post</h2>
-                             <form id="edit-post-form">
+                             <div id="edit-feedback" class="feedback-message" style="display:none;"></div>
+                             <form id="edit-post-form" class="form-container">
                                  <div class="form-group">
                                      <label for="edit-post-title">Título</label>
                                      <input type="text" id="edit-post-title" name="title" required>
@@ -38,23 +42,75 @@
                                  <button type="submit" class="publish-btn">Salvar Alterações</button>
                              </form>
                          </section>
-                     </main>
+                     </div>
 
                  </main>
             <!-- Sidebar Right-->
             <div id="sidebar-right-container" class="sidebar-right"></div>
          </div>
+    </div>
+    <script src="../scripts/components.js"></script>
+    <script src="../scripts/utils.js"></script>
+    <script src="../scripts/theme.js"></script>
+    <script src="../scripts/posts.js"></script>
+    <script src="../scripts/comments.js"></script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/profile.js"></script>
+    <script src="../scripts/search.js"></script>
     <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        loadComponent('Header', 'header-container');
-        loadComponent('SidebarLeft', 'sidebar-left-container').then(() => {
-            if (typeof updateSidebarUserName === 'function') {
-                updateSidebarUserName();
-            }
-        });
-        loadComponent('SideBarRight', 'sidebar-right-container');
+        document.addEventListener('DOMContentLoaded', () => {
+            loadComponent('Header', 'header-container').then(() => {
+            if (typeof updateHeaderAuth === 'function') updateHeaderAuth();
+            if (typeof initSearchBar === 'function') initSearchBar();
     });
-</script>
+            loadComponent('SidebarLeft', 'sidebar-left-container').then(() => {
+                if (typeof updateSidebarUserName === 'function') {
+                    updateSidebarUserName();
+                }
+            });
+            loadComponent('SideBarRight', 'sidebar-right-container');
+        });
+    </script>
+    <script>
+        document.addEventListener('DOMContentLoaded', async () => {
+            // Pega o ID do post da URL
+            const params = new URLSearchParams(window.location.search);
+            const postId = params.get('id');
+            if (!postId) return;
+
+            // Carrega os dados do post
+            const response = await fetch(`http://localhost:3000/api/posts/${postId}`);
+            const post = await response.json();
+
+            document.getElementById('edit-post-title').value = post.title || '';
+            document.getElementById('edit-post-desc').value = post.content || post.desc || '';
+
+            // Salva alterações
+            document.getElementById('edit-post-form').addEventListener('submit', async (e) => {
+                e.preventDefault();
+                const title = document.getElementById('edit-post-title').value;
+                const content = document.getElementById('edit-post-desc').value;
+                const token = localStorage.getItem('blogToken');
+                await fetch(`http://localhost:3000/api/posts/${postId}`, {
+                    method: 'PUT',
+                    headers: {
+                        'Content-Type': 'application/json',
+                        'Authorization': 'Bearer ' + token
+                    },
+                    body: JSON.stringify({ title, content })
+                });
+                const feedback = document.getElementById('edit-feedback');
+                feedback.textContent = 'Post atualizado com sucesso!';
+                feedback.style.display = 'block';
+                feedback.style.color = '#2e7d32'; // verde, ou use uma classe CSS
+
+                setTimeout(() => {
+                    feedback.style.display = 'none';
+                    window.location.href = `post.html?id=${postId}`;
+                }, 1500);
+            });
+        });
+    </script>
 </body>
 </html>
 
