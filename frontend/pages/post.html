@@ -20,57 +20,45 @@
         <div class="main-content-container">
             <div id="sidebar-left-container" class="sidebar-left"></div>
             <main id="main-content" class="content">
-                <div class="feed-container">
+                <div class="post-individual">
                     <section class="home-page">
-                        <!-- Posts -->
+                        <!-- Post Individual -->
                         <div id="posts-container">
-                            <div class="post-card">
-                                <div class="post-meta">
-                                    
-                                </div>
-                            </div>
+                            <div class="loading">Carregando post...</div>
                         </div>
+                        
                         <!-- Comentários -->
                         <div class="comments-section">
-                        <div class="comments-header">
-                        <h3>Comentários</h3>
-                        <div class="comments-filter">
-                            <button onclick="filterComments('best')">Melhores</button>
-                            <button onclick="filterComments('new')">Mais novos</button>
-                            <button onclick="filterComments('old')">Antigos</button>
-                </div>
-            </div>
-            <form id="add-comment-form">
-                <textarea id="comment-text" placeholder="Adicione um comentário..." required></textarea>
-                <button type="submit">Comentar</button>
-            </form>
-            <div id="comments-list">
-                <!-- Comentários renderizados via JS -->
-            </div>
-        </div>
+                            <div class="comments-header">
+                                <h3>Comentários</h3>
+                                <div class="comments-filter">
+                                    <button onclick="filterComments('best')">Melhores</button>
+                                    <button onclick="filterComments('new')">Mais novos</button>
+                                    <button onclick="filterComments('old')">Antigos</button>
+                                </div>
+                            </div>
+                            <form id="add-comment-form">
+                                <button class="add-comment-btn" type="button" onclick="postHandler.showCommentForm()">+ Adicione um comentário</button>
+
+                            </form>
+                            <div id="comments-list">
+                                <!-- Comentários renderizados via JS -->
+                            </div>
+                        </div>
                     </section>
                 </div>
             </main>
             <div id="sidebar-right-container" class="sidebar-right"></div>
         </div>
-    </section>
+    </div>
+    
     <script src="../scripts/components.js"></script>
-    <script src="../scripts/posts.js"></script>
     <script src="../scripts/utils.js"></script>
     <script src="../scripts/theme.js"></script>
-    <script src="../scripts/comments.js"></script>
     <script src="../scripts/profile.js"></script>
-    <script>
-    document.addEventListener('DOMContentLoaded', () => {
-        loadComponent('Header', 'header-container');
-        loadComponent('SidebarLeft', 'sidebar-left-container').then(() => {
-            if (typeof updateSidebarUserName === 'function') {
-                updateSidebarUserName();
-                
-            }
-        });
-        loadComponent('SideBarRight', 'sidebar-right-container');
-    });
-</script>
+    <script src="../scripts/auth.js"></script>
+    <script src="../scripts/post-handler.js"></script>
+    
+    
 </body>
 </html>

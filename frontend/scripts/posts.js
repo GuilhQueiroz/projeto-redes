@@ -84,3 +84,63 @@ function votePost(btn, type, postId) {
         loadPosts && loadPosts();
     });
 }
+
+// Função para extrair ID do post da URL
+function getPostIdFromUrl() {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get('id');
+}
+
+// Função para carregar um post específico
+async function loadSinglePost(postId) {
+    try {
+        const response = await fetch(`http://localhost:3000/api/posts/${postId}`);
+        if (!response.ok) {
+            throw new Error('Post não encontrado');
+        }
+        const post = await response.json();
+        renderSinglePost(post);
+        // Carregar comentários do post
+        loadComments(postId);
+    } catch (error) {
+        console.error('Erro ao carregar post:', error);
+        document.getElementById('posts-container').innerHTML = `
+            <div class="error-message">
+                <h3>Post não encontrado</h3>
+                <p>O post que você está procurando não existe ou foi removido.</p>
+                <a href="../index.html">Voltar para a página inicial</a>
+            </div>
+        `;
+    }
+}
+
+// Função para renderizar um post individual
+function renderSinglePost(post) {
+    const container = document.getElementById('posts-container');
+    
+    // Usa a foto do usuário se existir, senão usa o SVG padrão
+    const avatar = post.author?.avatar
+        ? post.author.avatar
+        : '/frontend/assets/do-utilizador.svg';
+    const authorName = post.author?.name || 'Usuário';
+    
+    container.innerHTML = `
+        <div class="post-card single-post">
+            <div class="post-meta">
+                <img src="${avatar}" alt="Usuário" class="post-user-icon">
+                <span class="post-author">${authorName}</span>
+                <span class="post-date">${new Date(post.createdAt).toLocaleDateString('pt-BR')}</span>
+            </div>
+            <h1 class="post-title">${post.title}</h1>
+            <div class="post-content">
+                <p>${post.content || post.desc || ''}</p>
+            </div>
+            <div class="post-actions">
+                <button class="vote-btn upvote" onclick="votePost(this, 'up', ${post.id})">👍</button>
+                <span class="vote-count">${post.votes ?? 0}</span>
+                <button class="vote-btn downvote" onclick="votePost(this, 'down', ${post.id})">👎</button>
+                <span class="comment-count">💬 ${post.commentsCount ?? 0} comentários</span>
+            </div>
+        </div>
+    `;
+}

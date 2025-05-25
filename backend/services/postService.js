@@ -13,7 +13,13 @@ async function getAllPosts() {
 }
 
 async function getPostById(id) {
-    return await Post.findByPk(id);
+    return await Post.findByPk(id, {
+        include: [{
+            model: User,
+            as: 'author',
+            attributes: ['name', 'avatar']
+        }]
+    });
 }
 
 async function createPost(data) {

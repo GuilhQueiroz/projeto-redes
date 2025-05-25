@@ -37,3 +37,4 @@ document.getElementById('add-comment-form')?.addEventListener('submit', async e 
     await createComment(postId, content);
     loadComments(postId);
 });
+

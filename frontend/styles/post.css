@@ -19,6 +19,7 @@
     padding: 1rem 1.2rem;
     max-width: 500px;
     width: 100%;
+    max-width: 1900px;
     display: flex;
     flex-direction: column;
     gap: 0.7rem;
@@ -213,4 +214,621 @@
     cursor: pointer;
     margin-left: 2.2rem;
     font-size: 0.95rem;
+}
+
+/* Adicione estas regras ao seu post.css existente */
+
+/* Container específico para post individual */
+.post-individual-container {
+    width: 100%;
+    max-width: 1000px;      /* Maior que o feed normal (800px) */
+    margin: 0 auto;
+    padding: 0 24px;
+    box-sizing: border-box;
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+}
+
+/* Post individual com estilo blog */
+.post-individual {
+    background: var(--card-background, #232323);
+    border: 1px solid var(--border-color, #333);
+    border-radius: 12px;
+    padding: 2.5rem 3rem;
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+    box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+}
+
+/* Meta informações do post individual */
+.post-individual .post-meta {
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+    font-size: 1rem;
+    color: var(--text-muted, #aaa);
+    border-bottom: 1px solid var(--border-color, #333);
+    padding-bottom: 1rem;
+}
+
+.post-individual .post-user-icon {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
+    background: #181818;
+    border: 2px solid var(--border-color, #333);
+    object-fit: cover;
+}
+
+.post-individual .post-author {
+    font-weight: 600;
+    color: var(--primary-color, #ff4500);
+    font-size: 1.1rem;
+}
+
+.post-individual .post-date {
+    margin-left: auto;
+    font-size: 0.95rem;
+}
+
+/* Título do post individual */
+.post-individual .post-title {
+    margin: 0;
+    font-size: 2.2rem;
+    font-weight: 700;
+    line-height: 1.3;
+    color: var(--text-color, #fff);
+}
+
+.post-individual .post-title a {
+    color: inherit;
+    text-decoration: none;
+}
+
+/* Corpo do post individual */
+.post-individual .post-body {
+    font-size: 1.1rem;
+    line-height: 1.7;
+    color: var(--text-color, #fff);
+    margin: 1rem 0;
+}
+
+/* Ações do post individual */
+.post-individual .post-actions {
+    display: flex;
+    align-items: center;
+    gap: 1.5rem;
+    padding-top: 1.5rem;
+    border-top: 1px solid var(--border-color, #333);
+}
+
+.post-individual .like-button, 
+.post-individual .dislike-button,
+.post-individual .comment-button {
+    background: #2a2a2a;
+    color: var(--text-muted, #aaa);
+    border: none;
+    border-radius: 8px;
+    padding: 10px 20px;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    transition: all 0.2s;
+}
+
+.post-individual .like-button:hover {
+    background: var(--upvote-color, #ff4500);
+    color: #fff;
+}
+
+.post-individual .dislike-button:hover {
+    background: var(--downvote-color, #7193ff);
+    color: #fff;
+}
+
+.post-individual .comment-button:hover {
+    background: var(--primary-color, #ff4500);
+    color: #fff;
+}
+
+/* Seção de comentários do post individual */
+.post-individual .comments-section {
+    background: var(--card-background, #232323);
+    border: 1px solid var(--border-color, #333);
+    border-radius: 12px;
+    padding: 2rem;
+    margin-top: 2rem;
+}
+
+.comments-section {
+    width: 100%;
+}
+
+.comments-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 2rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid var(--border-color, #333);
+}
+
+.comments-header h3 {
+    font-size: 1.4rem;
+    color: var(--text-color, #fff);
+    margin: 0;
+}
+
+.comments-filter {
+    display: flex;
+    gap: 10px;
+}
+
+.comments-filter button {
+    background: #2a2a2a;
+    color: var(--text-muted, #aaa);
+    border: none;
+    border-radius: 6px;
+    padding: 8px 16px;
+    font-size: 0.9rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.comments-filter button:hover,
+.comments-filter button.active {
+    background: var(--primary-color, #ff4500);
+    color: #fff;
+}
+
+/* Formulário de comentário */
+#add-comment-form {
+    margin-bottom: 2rem;
+    display: flex;
+    flex-direction: column;
+    gap: 1rem;
+}
+
+#comment-text {
+    background: #2a2a2a;
+    border: 1px solid var(--border-color, #333);
+    border-radius: 8px;
+    padding: 1rem;
+    color: var(--text-color, #fff);
+    font-size: 1rem;
+    min-height: 100px;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+}
+
+#comment-text:focus {
+    border-color: var(--primary-color, #ff4500);
+}
+
+#add-comment-form button[type="submit"] {
+    align-self: flex-end;
+    background: var(--primary-color, #ff4500);
+    color: #fff;
+    border: none;
+    border-radius: 6px;
+    padding: 10px 24px;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+#add-comment-form button[type="submit"]:hover {
+    background: #e03d00;
+}
+
+/* Comentários individuais */
+.comment-box {
+    background: #2a2a2a;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--border-color, #333);
+}
+
+.comment-meta {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    font-size: 0.95rem;
+    color: var(--text-muted, #aaa);
+    margin-bottom: 0.75rem;
+}
+
+.comment-user-icon {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #181818;
+    border: 1.5px solid var(--border-color, #333);
+    object-fit: cover;
+}
+
+.comment-content {
+    color: var(--text-color, #fff);
+    font-size: 1rem;
+    line-height: 1.5;
+    margin-bottom: 0.75rem;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 12px;
+}
+
+.comment-actions button {
+    background: none;
+    border: none;
+    color: var(--text-muted, #aaa);
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 4px 8px;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.comment-actions button:hover {
+    background: #333;
+    color: var(--primary-color, #ff4500);
+}
+
+/* Responsividade para post individual */
+@media (max-width: 1100px) {
+    .post-individual-container {
+        max-width: 900px;
+        padding: 0 20px;
+    }
+}
+
+@media (max-width: 768px) {
+    .post-individual-container {
+        padding: 0 16px;
+    }
+    
+    .post-individual {
+        padding: 1.5rem 1.5rem;
+    }
+    
+    .post-individual .post-title {
+        font-size: 1.8rem;
+    }
+    
+    .post-individual .post-body {
+        font-size: 1rem;
+    }
+    
+    .comments-header {
+        flex-direction: column;
+        gap: 1rem;
+        align-items: flex-start;
+    }
+    
+    .comments-filter {
+        width: 100%;
+        justify-content: center;
+    }
+}
+
+@media (max-width: 480px) {
+    .post-individual {
+        padding: 1rem;
+    }
+    
+    .post-individual .post-title {
+        font-size: 1.5rem;
+    }
+    
+    .post-individual .post-actions {
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+    
+    .comments-filter {
+        flex-direction: column;
+        width: 100%;
+    }
+    
+    .comments-filter button {
+        width: 100%;
+    }
+}
+
+/* Adicione estas regras ao seu modal.css existente ou post.css */
+
+/* Modal de comentários */
+.comment-modal-backdrop {
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(0, 0, 0, 0.7);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 2000;
+    opacity: 0;
+    visibility: hidden;
+    transition: all 0.3s ease;
+}
+
+.comment-modal-backdrop.show {
+    opacity: 1;
+    visibility: visible;
+}
+
+.comment-modal-content {
+    background: #222;
+    padding: 2rem;
+    border-radius: 12px;
+    box-shadow: 0 10px 30px rgba(0, 0, 0, 0.3);
+    width: 90%;
+    max-width: 600px;
+    margin: 20px;
+    position: relative;
+    transform: translateY(-50px);
+    transition: transform 0.3s ease;
+}
+
+.comment-modal-backdrop.show .comment-modal-content {
+    transform: translateY(0);
+}
+
+.comment-modal-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-bottom: 1.5rem;
+    padding-bottom: 1rem;
+    border-bottom: 1px solid #444;
+}
+
+.comment-modal-header h3 {
+    color: #fff;
+    margin: 0;
+    font-size: 1.3rem;
+}
+
+.close-comment-modal {
+    background: none;
+    border: none;
+    color: #aaa;
+    font-size: 1.5rem;
+    cursor: pointer;
+    padding: 0;
+    width: 30px;
+    height: 30px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    border-radius: 50%;
+    transition: all 0.2s;
+}
+
+.close-comment-modal:hover {
+    background: #333;
+    color: #fff;
+}
+
+.comment-form-group {
+    margin-bottom: 1.5rem;
+}
+
+.comment-form-group label {
+    display: block;
+    color: #ccc;
+    margin-bottom: 0.5rem;
+    font-size: 1rem;
+}
+
+.comment-textarea {
+    width: 100%;
+    min-height: 120px;
+    padding: 1rem;
+    border: 1px solid #444;
+    border-radius: 8px;
+    background: #333;
+    color: #fff;
+    font-size: 1rem;
+    font-family: inherit;
+    resize: vertical;
+    outline: none;
+    transition: border-color 0.2s;
+    box-sizing: border-box;
+}
+
+.comment-textarea:focus {
+    border-color: var(--primary-color, #ff4500);
+}
+
+.comment-textarea::placeholder {
+    color: #888;
+}
+
+.comment-modal-actions {
+    display: flex;
+    gap: 1rem;
+    justify-content: flex-end;
+}
+
+.cancel-comment-btn {
+    padding: 0.75rem 1.5rem;
+    border: 1px solid #444;
+    border-radius: 6px;
+    background: transparent;
+    color: #ccc;
+    font-size: 1rem;
+    cursor: pointer;
+    transition: all 0.2s;
+}
+
+.cancel-comment-btn:hover {
+    background: #444;
+    color: #fff;
+}
+
+.publish-comment-btn {
+    padding: 0.75rem 1.5rem;
+    border: none;
+    border-radius: 6px;
+    background: var(--primary-color, #ff4500);
+    color: #fff;
+    font-size: 1rem;
+    font-weight: 600;
+    cursor: pointer;
+    transition: background 0.2s;
+}
+
+.publish-comment-btn:hover {
+    background: #e03d00;
+}
+
+.publish-comment-btn:disabled {
+    background: #666;
+    cursor: not-allowed;
+}
+
+/* Botão para abrir modal */
+.add-comment-btn {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    background: var(--primary-color, #ff4500);
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    padding: 0.75rem 1.5rem;
+    font-size: 1rem;
+    font-weight: 500;
+    cursor: pointer;
+    transition: all 0.2s;
+    margin-bottom: 2rem;
+}
+
+.add-comment-btn:hover {
+    background: #e03d00;
+    transform: translateY(-1px);
+}
+
+.add-comment-btn:active {
+    transform: translateY(0);
+}
+
+/* Estilo para comentários existentes */
+.comments-list {
+    margin-top: 1rem;
+}
+
+.comment-item {
+    background: #2a2a2a;
+    border-radius: 8px;
+    padding: 1.5rem;
+    margin-bottom: 1rem;
+    border-left: 3px solid var(--border-color, #333);
+    transition: border-left-color 0.2s;
+}
+
+.comment-item:hover {
+    border-left-color: var(--primary-color, #ff4500);
+}
+
+.comment-header {
+    display: flex;
+    align-items: center;
+    gap: 0.75rem;
+    margin-bottom: 0.75rem;
+}
+
+.comment-avatar {
+    width: 24px;
+    height: 24px;
+    border-radius: 50%;
+    background: #181818;
+    border: 1.5px solid var(--border-color, #333);
+    object-fit: cover;
+}
+
+.comment-author {
+    font-weight: 600;
+    color: var(--primary-color, #ff4500);
+}
+
+.comment-date {
+    color: #888;
+    font-size: 0.9rem;
+}
+
+.comment-text {
+    color: #fff;
+    line-height: 1.6;
+    margin-bottom: 0.75rem;
+}
+
+.comment-actions {
+    display: flex;
+    gap: 1rem;
+}
+
+.comment-action-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 0.9rem;
+    cursor: pointer;
+    padding: 0.25rem 0.5rem;
+    border-radius: 4px;
+    transition: all 0.2s;
+}
+
+.comment-action-btn:hover {
+    background: #333;
+    color: var(--primary-color, #ff4500);
+}
+
+/* Responsividade do modal */
+@media (max-width: 768px) {
+    .comment-modal-content {
+        width: 95%;
+        padding: 1.5rem;
+        margin: 10px;
+    }
+    
+    .comment-modal-actions {
+        flex-direction: column;
+    }
+    
+    .cancel-comment-btn,
+    .publish-comment-btn {
+        width: 100%;
+    }
+}
+
+/* Animação de loading */
+.comment-loading {
+    display: inline-block;
+    width: 16px;
+    height: 16px;
+    border: 2px solid #666;
+    border-radius: 50%;
+    border-top-color: #fff;
+    animation: spin 1s linear infinite;
+    margin-right: 0.5rem;
+}
+
+@keyframes spin {
+    to {
+        transform: rotate(360deg);
+    }
 }
