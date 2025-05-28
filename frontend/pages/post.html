@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../styles/help.css">
     <link rel="stylesheet" href="../styles/about.css">
     <link rel="stylesheet" href="../styles/modal.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
     </head>
 <body>
     <div class="app-container">
@@ -48,7 +49,6 @@
                     </section>
                 </div>
             </main>
-            <div id="sidebar-right-container" class="sidebar-right"></div>
         </div>
     </div>
     
@@ -71,7 +71,6 @@
             if (typeof updateSidebarUserName === 'function') updateSidebarUserName();
             loadRecentActivities(); // <-- Só carrega as atividades recentes
         });
-        loadComponent('SideBarRight', 'sidebar-right-container');
     });
     </script>
 </body>

@@ -4,6 +4,7 @@ async function loadComponent(name, containerId) {
     const response = await fetch(`${base}${name}.html`);
     const html = await response.text();
     document.getElementById(containerId).innerHTML = html;
+    setupMobileMenu();
 }
 
 function updateHeaderAuth() {
@@ -54,9 +55,66 @@ async function loadRecentActivities() {
     list.innerHTML = items.filter(Boolean).join('');
 }
 
-// Chame isso ao carregar a sidebar:
+// Função para configurar o menu mobile
+function setupMobileMenu() {
+    const mobileNavToggle = document.querySelector('.mobile-nav-toggle');
+    const sidebarLeft = document.querySelector('.sidebar-left');
+
+    if (!mobileNavToggle || !sidebarLeft) return;
+
+    // Fecha o menu ao clicar fora
+    const closeOnClickOutside = (e) => {
+        if (!sidebarLeft.contains(e.target) && e.target !== mobileNavToggle) {
+            closeMobileMenu();
+        }
+    };
+
+    // Fecha o menu ao clicar em um link/item
+    const closeOnItemClick = () => closeMobileMenu();
+
+    // Função para abrir/fechar o menu
+    const toggleMobileMenu = () => {
+        const isOpening = !sidebarLeft.classList.contains('active');
+        
+        mobileNavToggle.classList.toggle('active');
+        sidebarLeft.classList.toggle('active');
+        mobileNavToggle.setAttribute('aria-expanded', isOpening);
+
+        if (isOpening) {
+            document.addEventListener('click', closeOnClickOutside);
+            document.querySelectorAll('.sidebar-item a, .sidebar-item button').forEach(item => {
+                item.addEventListener('click', closeOnItemClick);
+            });
+        } else {
+            document.removeEventListener('click', closeOnClickOutside);
+        }
+    };
+
+    // Função para fechar o menu
+    const closeMobileMenu = () => {
+        mobileNavToggle.classList.remove('active');
+        sidebarLeft.classList.remove('active');
+        mobileNavToggle.setAttribute('aria-expanded', 'false');
+        document.removeEventListener('click', closeOnClickOutside);
+    };
+
+    // Adiciona os event listeners
+    mobileNavToggle.addEventListener('click', toggleMobileMenu);
+
+    // Fecha o menu se a janela for redimensionada para um tamanho maior
+    window.addEventListener('resize', () => {
+        if (window.innerWidth > 768 && sidebarLeft.classList.contains('active')) {
+            closeMobileMenu();
+        }
+    });
+}
+
+// Inicializa tudo quando o DOM estiver carregado
 document.addEventListener('DOMContentLoaded', () => {
     loadComponent('SidebarLeft', 'sidebar-left-container').then(() => {
         loadRecentActivities();
+        updateSidebarUserName();
+        updateHeaderAuth();
+        setupMobileMenu(); // Configura o menu mobile
     });
 });

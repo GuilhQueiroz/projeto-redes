@@ -12,6 +12,7 @@
     <link rel="stylesheet" href="../styles/help.css">
     <link rel="stylesheet" href="../styles/about.css">
     <link rel="stylesheet" href="../styles/modal.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
 </head>
 <body>
     <div class="app-container">
@@ -28,7 +29,6 @@
                     </section>
                 </div>
             </main>
-            <div id="sidebar-right-container" class="sidebar-right"></div>
         </div>
     </div>
     <div id="create-post-modal" style="display:none;">
@@ -65,7 +65,6 @@
             loadRecentActivities();
             //loadPosts();
         });
-        loadComponent('SideBarRight', 'sidebar-right-container');
         // ...outras funções de inicialização...
     });
 </script>    

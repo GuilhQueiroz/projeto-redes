@@ -152,6 +152,7 @@
     height: 100%;
     align-items: stretch;
     background: var(--card-background);
+    position: relative;
 }
 
 /* Sidebar esquerda */
@@ -412,5 +413,4 @@ body.dark-mode #confirm-modal .modal-content {
     background: var(--card-background, #23262f);
     color: var(--text-color, #f5f6fa);
 }
-
 

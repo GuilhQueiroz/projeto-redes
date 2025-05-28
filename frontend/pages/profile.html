@@ -13,6 +13,7 @@
     <link rel="stylesheet" href="../styles/help.css">
     <link rel="stylesheet" href="../styles/about.css">
     <link rel="stylesheet" href="../styles/modal.css">
+    <link rel="stylesheet" href="../styles/responsive.css">
 </head>
 <body>
     <div class="app-container">
@@ -51,8 +52,6 @@
             </form>
         </section>
     </main>
-            <!-- Sidebar Right-->
-            <div id="sidebar-right-container" class="sidebar-right"></div>
          </div>
     </div>
     <script src="../scripts/components.js"></script>
@@ -73,7 +72,6 @@
             if (typeof updateSidebarUserName === 'function') updateSidebarUserName();
             loadRecentActivities();
         });
-        loadComponent('SideBarRight', 'sidebar-right-container');
         loadProfile(); // <-- Isso garante que os dados do usuário serão buscados ao abrir a página
         // ...outras funções de inicialização
     });
