@@ -3,6 +3,9 @@ const cors = require('cors');
 const sequelize = require('./config/db');
 require('dotenv').config();
 
+// Importe os models e as associações
+require('./models'); // <-- Adicione esta linha!
+
 const User = require('./models/User');
 const Post = require('./models/Post');
 const Comment = require('./models/Comment');

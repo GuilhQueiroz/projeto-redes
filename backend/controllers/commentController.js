@@ -2,7 +2,8 @@ const commentService = require('../services/commentService');
 
 exports.getCommentsByPost = async (req, res, next) => {
     try {
-        const comments = await commentService.getCommentsByPost(req.params.postId);
+        const userId = req.user ? req.user.id : null;
+        const comments = await commentService.getCommentsByPost(req.params.postId, userId);
         res.json(comments);
     } catch (err) { next(err); }
 };

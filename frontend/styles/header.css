@@ -414,3 +414,35 @@ body.dark-mode #confirm-modal .modal-content {
     color: var(--text-color, #f5f6fa);
 }
 
+.like-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1.2rem;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+    transition: color 0.2s;
+}
+.like-btn.liked {
+    color: #e0245e;
+}
+.like-count {
+    font-weight: bold;
+}
+
+.like-comment-btn {
+    background: none;
+    border: none;
+    color: #888;
+    font-size: 1rem;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 4px;
+    transition: color 0.2s;
+}
+.like-comment-btn.liked {
+    color: #e0245e;
+}

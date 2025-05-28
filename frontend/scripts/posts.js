@@ -25,9 +25,9 @@ function renderPosts(posts) {
                 <a href="#" onclick="viewPost(${post.id});return false;">${post.title}</a>
             </h3>
             <div class="post-actions">
-                <button class="vote-btn upvote" onclick="votePost(this, 'up', ${post.id})">👍</button>
-                <span class="vote-count">${post.votes ?? 0}</span>
-                <button class="vote-btn downvote" onclick="votePost(this, 'down', ${post.id})">👎</button>
+                <button class="like-btn ${post.likedByUser ? 'liked' : ''}" onclick="likePost(this, ${post.id})">
+                    ❤️ <span class="like-count">${post.likesCount ?? 0}</span>
+                </button>
                 <button class="comment-btn" onclick="viewPost(${post.id})">💬 <span>${post.commentsCount ?? 0}</span></button>
             </div>
         </div>
@@ -85,16 +85,26 @@ document.getElementById('create-post-form')?.addEventListener('submit', async e 
     closeCreatePostModal(); // Fecha o modal automaticamente
 });
 
-function votePost(btn, type, postId) {
-    // Exemplo simples: envie para o backend e atualize o contador
-    fetchAuth(`http://localhost:3000/api/interactions/post/${postId}`, {
+// Função para curtir um post
+async function likePost(btn, postId) {
+    const token = localStorage.getItem('blogToken');
+    const response = await fetch(`http://localhost:3000/api/interactions/post/${postId}`, {
         method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ value: type === 'up' ? 1 : -1 })
-    }).then(() => {
-        // Opcional: recarregue os posts ou atualize o contador na tela
-        loadPosts && loadPosts();
+        headers: {
+            'Content-Type': 'application/json',
+            'Authorization': 'Bearer ' + token
+        }
     });
+    const data = await response.json();
+    // Atualize o contador e o estilo do botão
+    let countSpan = btn.querySelector('.like-count');
+    if (data.liked) {
+        btn.classList.add('liked');
+        countSpan.textContent = data.likesCount;
+    } else {
+        btn.classList.remove('liked');
+        countSpan.textContent = data.likesCount;
+    }
 }
 
 // Função para extrair ID do post da URL
@@ -150,9 +160,9 @@ function renderSinglePost(post) {
                 <p>${post.content || post.desc || ''}</p>
             </div>
             <div class="post-actions">
-                <button class="vote-btn upvote" onclick="votePost(this, 'up', ${post.id})">👍</button>
-                <span class="vote-count">${post.votes ?? 0}</span>
-                <button class="vote-btn downvote" onclick="votePost(this, 'down', ${post.id})">👎</button>
+                <button class="like-btn ${post.likedByUser ? 'liked' : ''}" onclick="likePost(this, ${post.id})">
+                    ❤️ <span class="like-count">${post.likesCount ?? 0}</span>
+                </button>
                 <span class="comment-count">💬 ${post.commentsCount ?? 0} comentários</span>
                 ${isOwner ? `<button class="delete-post-btn" onclick="deletePost(${post.id})">Excluir</button>` : ''}
             </div>

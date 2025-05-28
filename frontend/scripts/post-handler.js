@@ -107,15 +107,9 @@ class PostHandler {
                     <p>${post.content || ''}</p>
                 </div>
                 <div class="post-actions">
-                    <div class="vote-section">
-                        <button class="vote-btn upvote" onclick="postHandler.votePost('${post.id}', ('up')">
-                            👍
-                        </button>
-                        <span class="vote-count">0</span>
-                        <button class="vote-btn downvote" onclick="postHandler.votePost('${post.id}', ('down')">
-                            👎
-                        </button>
-                    </div>
+               <button class="like-btn ${post.likedByUser ? 'liked' : ''}" onclick="likePost(this, ${post.id})">
+                    ❤️ <span class="like-count">${post.likesCount ?? 0}</span>
+                </button>
                     <div class="comment-section-info">
                         <span class="comment-count">💬 <span id="comment-count">0</span> comentários</span>
                     </div>
@@ -123,29 +117,7 @@ class PostHandler {
             </div>
         `;
     }
-
-    // Sistema de Votação - Corrigido para usar a rota correta
-    async votePost(type) {
-        try {
-            const value = type === 'up' ? 1 : -1;
-            // Corrigindo a URL da rota de votação baseada no seu backend
-            const response = await this.fetchAuth(`http://localhost:3000/api/posts/posts/${this.currentPostId}/vote`, {
-                method: 'POST',
-                body: JSON.stringify({ type }) // Backend espera 'type', não 'value'
-            });
-
-            if (response.ok) {
-                const result = await response.json();
-                console.log('Voto registrado:', result);
-                this.showNotification('Voto registrado!', 'success');
-            } else {
-                throw new Error('Erro ao votar');
-            }
-        } catch (error) {
-            console.error('Erro ao votar:', error);
-            this.showNotification('Erro ao registrar voto', 'error');
-        }
-    }
+    
 
     // Sistema de Comentários - Corrigido para usar as rotas corretas
     async loadComments() {
@@ -255,11 +227,8 @@ class PostHandler {
                     <p>${comment.content}</p>
                 </div>
                 <div class="comment-actions">
-                    <button class="vote-btn comment-upvote" onclick="postHandler.voteComment(${comment.id}, 'up')">
-                        👍 <span>0</span>
-                    </button>
-                    <button class="vote-btn comment-downvote" onclick="postHandler.voteComment(${comment.id}, 'down')">
-                        👎 <span>0</span>
+                     <button class="like-comment-btn ${comment.likedByUser ? 'liked' : ''}" onclick="likeComment(this, ${comment.id})">
+                        ❤️ <span class="like-count">${comment.likesCount ?? 0}</span>
                     </button>
                     <button class="reply-btn" onclick="postHandler.toggleReplyForm(${comment.id})">
                         Responder
@@ -580,3 +549,61 @@ document.addEventListener('DOMContentLoaded', () => {
         loadComponent('SidebarLeft', 'sidebar-left-container').then(updateSidebarUserName);
         loadComponent('SideBarRight', 'sidebar-right-container');
 });
+
+window.likePost = async function(btn, postId) {
+    const token = localStorage.getItem('blogToken');
+    if (!token) {
+        if (window.postHandler) window.postHandler.showNotification('Você precisa estar logado para curtir.', 'warning');
+        return;
+    }
+    btn.disabled = true;
+    try {
+        const response = await fetch(`http://localhost:3000/api/interactions/post/${postId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
+        const data = await response.json();
+        let countSpan = btn.querySelector('.like-count');
+        if (data.liked) {
+            btn.classList.add('liked');
+        } else {
+            btn.classList.remove('liked');
+        }
+        countSpan.textContent = data.likesCount;
+    } catch (err) {
+        if (window.postHandler) window.postHandler.showNotification('Erro ao curtir post.', 'error');
+    }
+    btn.disabled = false;
+}
+
+window.likeComment = async function(btn, commentId) {
+    const token = localStorage.getItem('blogToken');
+    if (!token) {
+        if (window.postHandler) window.postHandler.showNotification('Você precisa estar logado para curtir.', 'warning');
+        return;
+    }
+    btn.disabled = true;
+    try {
+        const response = await fetch(`http://localhost:3000/api/interactions/comment/${commentId}`, {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+                'Authorization': 'Bearer ' + token
+            }
+        });
+        const data = await response.json();
+        let countSpan = btn.querySelector('.like-count');
+        if (data.liked) {
+            btn.classList.add('liked');
+        } else {
+            btn.classList.remove('liked');
+        }
+        countSpan.textContent = data.likesCount;
+    } catch (err) {
+        if (window.postHandler) window.postHandler.showNotification('Erro ao curtir comentário.', 'error');
+    }
+    btn.disabled = false;
+}

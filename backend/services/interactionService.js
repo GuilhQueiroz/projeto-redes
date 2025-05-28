@@ -1,12 +1,30 @@
 const Like = require('../models/Like');
 
-async function likePost(userId, postId, value) {
-    // value: 1 (like), -1 (dislike)
-    return await Like.upsert({ userId, postId, value });
+async function toggleLikePost(userId, postId) {
+    const existing = await Like.findOne({ where: { userId, postId } });
+    if (existing) {
+        await existing.destroy();
+        const likesCount = await Like.count({ where: { postId } });
+        return { liked: false, likesCount };
+    }
+    await Like.create({ userId, postId, value: 1 });
+    const likesCount = await Like.count({ where: { postId } });
+    return { liked: true, likesCount };
 }
 
-async function likeComment(userId, commentId, value) {
-    return await Like.upsert({ userId, commentId, value });
+async function likeComment(userId, commentId) {
+    const existing = await Like.findOne({ where: { userId, commentId } });
+    if (existing) {
+        await existing.destroy();
+        const likesCount = await Like.count({ where: { commentId } });
+        return { liked: false, likesCount };
+    }
+    await Like.create({ userId, commentId, value: 1 });
+    const likesCount = await Like.count({ where: { commentId } });
+    return { liked: true, likesCount };
 }
 
-module.exports = { likePost, likeComment };
+module.exports = { 
+    toggleLikePost,
+    likeComment // <-- exporte a função!
+};

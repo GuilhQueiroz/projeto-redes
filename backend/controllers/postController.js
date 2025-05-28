@@ -4,14 +4,17 @@ const Comment = require('../models/Comment');
 
 exports.getAllPosts = async (req, res, next) => {
     try {
-        const posts = await postService.getAllPosts();
+        // req.user pode ser undefined se não estiver autenticado
+        const userId = req.user ? req.user.id : null;
+        const posts = await postService.getAllPosts(userId);
         res.json(posts);
     } catch (err) { next(err); }
 };
 
 exports.getPostById = async (req, res, next) => {
     try {
-        const post = await postService.getPostById(req.params.id);
+        const userId = req.user ? req.user.id : null;
+        const post = await postService.getPostById(req.params.id, userId);
         if (!post) return res.status(404).json({ error: 'Post não encontrado' });
         res.json(post);
     } catch (err) { next(err); }
